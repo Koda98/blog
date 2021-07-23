@@ -42,9 +42,37 @@ test('a valid blog can be added', async () => {
   
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
-  
+
   const blogsWithoutId = blogsAtEnd.map(({id, ...props}) => props)
   expect(blogsWithoutId).toContainEqual(newBlog)
+})
+
+test('likes property defaults to 0 if missing', async () => {
+  const newBlog = {
+    title: 'Circle Syl',
+    author: 'Definitely Not Kyle',
+    url: 'www.circle-syl.com'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+    
+  const expectedBlog = {
+    title: 'Circle Syl',
+    author: 'Definitely Not Kyle',
+    url: 'www.circle-syl.com',
+    likes: 0
+  }
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const blogsWithoutId = blogsAtEnd.map(({id, ...props}) => props)
+  expect(blogsWithoutId).toContainEqual(expectedBlog) 
 })
 
 afterAll(() => {
