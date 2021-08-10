@@ -99,17 +99,36 @@ describe('deletion of a blog', () => {
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
       .expect(204)
-    
-      const blogsAtEnd = await helper.blogsInDb()
+  
+    const blogsAtEnd = await helper.blogsInDb()
 
-      expect(blogsAtEnd).toHaveLength(
-        helper.initialBlogs.length - 1
-      )
+    expect(blogsAtEnd).toHaveLength(
+      helper.initialBlogs.length - 1
+    )
 
-      const titles = blogsAtEnd.map(r => r.title)
+    const titles = blogsAtEnd.map(r => r.title)
 
-      expect(titles).not.toContain(blogToDelete.title)
+    expect(titles).not.toContain(blogToDelete.title)
   })
+})
+
+test('blog with new amount of likes is updated', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToUpdate = blogsAtStart[0]
+
+  const newBlog = {
+    likes: 11111
+  }
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(newBlog)
+    .expect(200)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  console.log(blogsAtEnd)
+  const likes = blogsAtEnd.map(b => b.likes)
+  expect(likes).toContain(11111)
 })
 
 afterAll(() => {
