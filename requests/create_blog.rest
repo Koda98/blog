@@ -1,8 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdHR5VCIsImlkIjoiNjExNWQ4MzRmYjhkOTFlZmIyODFlMjUwIiwiaWF0IjoxNjI4ODIyOTgzfQ.c4h6912CKJsl-PMiIFfHEJtp0s9ToL_ssMPNWt6DeAY
 
 {
-    "title": "Pats Blog",
+    "title": "Pats Blog 2",
     "author": "Patrick Tantalo",
     "userId": "6115d834fb8d91efb281e250",
     "url": "https://www.pattyT.com",
