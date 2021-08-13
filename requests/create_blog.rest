@@ -2,8 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Second Blog",
-    "author": "Sleepy Syl",
-    "url": "https://www.sleepy_syl.com",
-    "likes": "69"
+    "title": "Pats Blog",
+    "author": "Patrick Tantalo",
+    "userId": "6115d834fb8d91efb281e250",
+    "url": "https://www.pattyT.com",
+    "likes": "420"
 }
