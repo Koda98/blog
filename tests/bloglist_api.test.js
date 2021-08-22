@@ -39,6 +39,7 @@ test('a valid blog can be added', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdHR5VCIsImlkIjoiNjExNWQ4MzRmYjhkOTFlZmIyODFlMjUwIiwiaWF0IjoxNjI5Njc0NjY3LCJleHAiOjE2Mjk2NzgyNjd9.hsJIWSHCVOsTIsXlVXwL4Jg2Y3nT0SPD2TLISpQgJSI")
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -46,8 +47,25 @@ test('a valid blog can be added', async () => {
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
-  const blogsWithoutId = blogsAtEnd.map(({id, ...props}) => props)
-  expect(blogsWithoutId).toContainEqual(newBlog)
+  const title = blogsAtEnd.map(b => b.title)
+  expect(title).toContainEqual(newBlog.title)
+})
+
+test('fails when blog without token is added', async () => {
+  const newBlog = {
+    title: 'Sleepy Syl is very sleepy 2',
+    author: 'Not Kyle',
+    url: 'www.sleepy-syl.com',
+    likes: 420
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(401)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 })
 
 test('likes property defaults to 0 if missing', async () => {
