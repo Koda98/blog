@@ -39,7 +39,7 @@ test('a valid blog can be added', async () => {
 
   await api
     .post('/api/blogs')
-    .set('Authorization', "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhdHR5VCIsImlkIjoiNjExNWQ4MzRmYjhkOTFlZmIyODFlMjUwIiwiaWF0IjoxNjI5Njc0NjY3LCJleHAiOjE2Mjk2NzgyNjd9.hsJIWSHCVOsTIsXlVXwL4Jg2Y3nT0SPD2TLISpQgJSI")
+    .set('Authorization', `bearer ${process.env.TOKEN}`)
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
