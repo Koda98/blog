@@ -1,3 +1,4 @@
 node_modules/
 .env
 requests/create_blog.rest
+requests/delete_blog.rest
